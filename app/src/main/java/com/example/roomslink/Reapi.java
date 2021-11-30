@@ -25,7 +25,7 @@ public class Reapi {
         return object;
     }
 
-    public ApiInsert getdata()
+    public ApiInsert getApidata()
     {
         return retrofit.create(ApiInsert.class);
     }

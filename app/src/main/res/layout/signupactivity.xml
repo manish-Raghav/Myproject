@@ -62,7 +62,7 @@
         android:ems="10"
         android:hint="Rent"
         android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNumber2"
+        app:layout_constraintBottom_toTopOf="@+id/talent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img3"
         app:layout_constraintVertical_bias="0.555" />
@@ -79,7 +79,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editTextNumber2"
+        android:id="@+id/talent"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -100,7 +100,7 @@
         android:hint="Adress"
         android:inputType="textPostalAddress"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTextNumber2"
+        app:layout_constraintEnd_toStartOf="@+id/talent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 

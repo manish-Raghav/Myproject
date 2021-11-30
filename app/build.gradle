@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'com.google.firebase:firebase-database:19.2.1'
     implementation 'androidx.recylerview:recyclerview:1.2.0'
+    implementation "androidx.cardview:cardview:1.0.0"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.+'

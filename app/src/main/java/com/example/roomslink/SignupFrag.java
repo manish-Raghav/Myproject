@@ -12,19 +12,28 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.roomslink.R;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignupFrag extends Fragment {
 
-     private static final   String url ="http://localhost/php/";
+     private static final   String url ="http://192.168.0.114/php/";
+     EditText phn ,rnt,tlt,adrss,des;
 
      ImageView imge1 ,imge2,imge3;
      Button btn;
@@ -41,12 +50,20 @@ public class SignupFrag extends Fragment {
         imge2 = view.findViewById(R.id.img2);
         imge3 = view.findViewById(R.id.img3);
         btn = view.findViewById(R.id.upload);
+        phn = view.findViewById(R.id.phone);
+        adrss = view.findViewById(R.id.adress);
+        rnt = view.findViewById(R.id.rent);
+        tlt = view.findViewById(R.id.talent);
+        des = view.findViewById(R.id.desi);
           Bundle bundle = this.getArguments();
           email = bundle.getString("email");
            btn.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
                    Serverdata();
+
+
+
                }
            });
 
@@ -61,7 +78,7 @@ public class SignupFrag extends Fragment {
 
                     try {
 
-                        bitmap1= MediaStore.Images.Media.getBitmap( getContentResolver(), intent.getData());
+                        bitmap1= MediaStore.Images.Media.getBitmap( getActivity().getContentResolver(), intent.getData());
 
                         imge1.setImageBitmap(bitmap1);
 
@@ -85,7 +102,7 @@ public class SignupFrag extends Fragment {
 
                     try {
 
-                        bitmap2= MediaStore.Images.Media.getBitmap(getContentResolver(), intent.getData());
+                        bitmap2= MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), intent.getData());
 
                         imge2.setImageBitmap(bitmap2);
 
@@ -105,7 +122,7 @@ public class SignupFrag extends Fragment {
 
                     try {
 
-                        bitmap3= MediaStore.Images.Media.getBitmap(getContentResolver(), intent.getData());
+                        bitmap3= MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), intent.getData());
 
 
 
@@ -123,6 +140,8 @@ public class SignupFrag extends Fragment {
 
 
 
+
+         // 64 Algoritham
 
 
 
@@ -188,6 +207,31 @@ public class SignupFrag extends Fragment {
 
     private void Serverdata() {
 
+        ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
+        ByteArrayOutputStream byteArrayOutputStream2 = new ByteArrayOutputStream();
+        ByteArrayOutputStream byteArrayOutputStream3 = new ByteArrayOutputStream();
+        bitmap1.compress(Bitmap.CompressFormat.JPEG,75,byteArrayOutputStream1);
+        bitmap2.compress(Bitmap.CompressFormat.JPEG,75,byteArrayOutputStream2);
+        bitmap3.compress(Bitmap.CompressFormat.JPEG,75,byteArrayOutputStream3);
+        byte[]  firstimg = byteArrayOutputStream1.toByteArray();
+        byte[]  secondimg = byteArrayOutputStream1.toByteArray();
+        byte[]  thirdimg = byteArrayOutputStream1.toByteArray();
+        String encode1 = Base64.encodeToString(firstimg,Base64.DEFAULT);
+        String encode2 = Base64.encodeToString(secondimg,Base64.DEFAULT);
+        String encode3 = Base64.encodeToString(thirdimg,Base64.DEFAULT);
+        Call<Insertdata> call = Reapi.getInstance().getApidata().adddata(email,phn.getText().toString(),adrss.getText().toString(),Integer.parseInt(rnt.getText().toString()),Integer.parseInt(tlt.getText().toString()),des.getText().toString(),encode1,encode2,encode3);
+
+       call.enqueue(new Callback<Insertdata>() {
+           @Override
+           public void onResponse(Call<Insertdata> call, Response<Insertdata> response) {
+               Toast.makeText(getContext(), response.body().getData(), Toast.LENGTH_LONG).show();
+           }
+
+           @Override
+           public void onFailure(Call<Insertdata> call, Throwable t) {
+
+           }
+       });
 
 
 
